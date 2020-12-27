@@ -24,4 +24,14 @@
   (io/copy (io/file "resources/public/css/main.css")
            (io/file css-output)))
 
+(println "Copy images")
+(let [source-dir "resources/public/img/"]
+  (doseq [f (file-seq (io/file source-dir))]
+    (let [file-name (.getName f)
+          img-output (str "docs/img/" file-name)]
+      (when (.isFile f)
+        (io/make-parents img-output)
+        (io/copy (io/file (str source-dir file-name))
+                 (io/file img-output))))))
+
 (println "Done!")
