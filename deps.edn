@@ -1,0 +1,9 @@
+{:paths   ["src" "resources"]
+ :deps    {org.clojure/clojure         {:mvn/version "1.10.2-rc1"}
+           org.clojure/clojurescript   {:mvn/version "1.10.773"}
+           com.bhauman/figwheel-main   {:mvn/version "0.2.13-SNAPSHOT"}
+           com.andrewmcveigh/cljs-time {:mvn/version "0.5.2"}}
+ :aliases {:dev {:extra-paths ["dev"]
+                 :extra-deps  [binaryage/devtools              {:mvn/version "0.9.10"}
+                               com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
+                               cider/piggieback                {:mvn/version "0.5.0"}]}}}

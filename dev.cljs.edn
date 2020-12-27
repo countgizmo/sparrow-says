@@ -1,0 +1,13 @@
+^{:build-inputs        ["src/sparrow_says"]
+  :log-level           :info
+  :open-url            false
+  :ring-server-options {:host "0.0.0.0" :port 3449}
+  :watch-dirs          ["src"]}
+{:main            sparrow-says.core
+ :asset-path      "/js"
+ :optimizations   :none
+ :output-dir      "resources/public/js"
+ :output-to       "resources/public/js/main.js"
+ :closure-defines {goog.DEBUG true}
+ :external-config {:devtools/config {:features-to-install :all}}
+ :source-map      true}
