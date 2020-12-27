@@ -4,18 +4,20 @@
 (def debug?
   ^boolean js/goog.DEBUG)
 
-(defn dev-setup []
+(defn dev-setup
+  []
   (when debug?
     (enable-console-print!)
     (println "dev mode")))
 
 (defn dice-roll
+  "Returns a random number from 0 to 5 inclusive."
   []
   (rand-int 6))
 
 (defn dice-roll->coin-flip
-  [dice-roll]
-  (if (> 3 dice-roll) 0 1))
+  [roll]
+  (if (> 3 roll) 0 1))
 
 (defn exercise
   [week-number roll]
@@ -46,22 +48,61 @@
       (reps-scheme (dice-roll))
       (swing-type (dice-roll))))
 
-(defn format-workout
-  [week {:keys [exercise series reps-scheme sw-type]}]
-  (str "Week " week
-       "<br />"
-       "Exercise: " exercise
-       "<br />"
-       "Series: " series
-       "<br />"
-       "Reps: " reps-scheme
-       "<br />"
-       (when sw-type (str "SW Type: " sw-type))))
+(defn div
+  ([text]
+   (div text ""))
+  ([text class]
+   (str "<div"
+        " class=\"" class "\">"
+        text
+        "</div>")))
 
-(defn render!
+(defn h3
+  ([text]
+   (div text ""))
+  ([text class]
+   (str "<h3"
+        " class=\"" class "\">"
+        text
+        "</h3>")))
+
+(defn button
+  ([label onclick]
+   (button label onclick ""))
+  ([label onclick class]
+   (str "<button"
+        " class=\"" class "\""
+        " onclick=" onclick ">"
+        label
+        "</button>")))
+
+(defn img
+  [src class]
+  (str "<img"
+       " class=\"" class "\""
+       " src=" src " />"))
+
+(defn format-workout
+  [{:keys [exercise series reps-scheme sw-type]}]
+  (let [img-src (case exercise
+                  :snatches "img/kb-snatch.png"
+                  :sw+pu "img/kb-swing.png")]
+    (div
+     (str
+          (div (img img-src "w-32") "bg-indigo-300 inline-block rounded-md")
+          (div
+           (str (div (str series " series"))
+                (div (str (name reps-scheme) " reps"))
+                (when sw-type (div (name sw-type))))
+           "bg-indigo-100 w-32 px-4 py-2 rounded-md")
+
+          (button "Again!" "sparrow_says.core.render_BANG_();" "mt-4 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-32"))
+     "container ml-8 mt-4 w-36 border border-indigo-900 p-2 rounded-md")))
+
+(defn ^:export render!
   []
   (let [app  (.getElementById js/document "app")
         week (time/week-number-of-year (time/now))]
-    (set! (.-innerHTML app) (format-workout week (workout week)))))
+    (set! (.-innerHTML app) (format-workout (workout week)))))
 
 (render!)

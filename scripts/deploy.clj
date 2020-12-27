@@ -20,6 +20,7 @@
 
 (println "Copy main.css")
 (let [css-output "docs/css/main.css"]
+  (io/make-parents css-output)
   (io/copy (io/file "resources/public/css/main.css")
            (io/file css-output)))
 
