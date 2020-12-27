@@ -1,0 +1,6 @@
+^{:log-level    :error
+  :build-inputs ["src/sparrow_says"]}
+{:optimizations   :advanced
+ :output-dir      "resources/public/js/prod/"
+ :output-to       "resources/public/js/prod/main.js"
+ :closure-defines {goog.DEBUG false}}
